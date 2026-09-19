@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>تجهيزات عرس أخوي 💍</title>
+<meta name="description" content="تجهيزات عرس أخوي — كل التفاصيل في مكان واحد.. عشان ما ننسى شيء" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ===================== Header ===================== -->
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand">
+      <h1>💍 تجهيزات عرس أخوي</h1>
+      <p class="subtitle">كل التفاصيل في مكان واحد.. عشان ما ننسى شيء 🤍</p>
+      <span class="sync-badge" id="syncBadge">⏳ جاري التحقق من المزامنة...</span>
+    </div>
+
+    <div class="setup-card fade-in">
+      <div class="setup-field">
+        <label for="groomNameInput">اسم العريس</label>
+        <input type="text" id="groomNameInput" placeholder="اكتبي اسم العريس">
+      </div>
+      <div class="setup-field">
+        <label for="weddingDateInput">تاريخ الزواج</label>
+        <input type="date" id="weddingDateInput">
+      </div>
+    </div>
+
+    <div id="countdownBox" class="countdown-box hidden">
+      <span class="countdown-label">باقي على العرس</span>
+      <div class="countdown-numbers">
+        <div class="cd-unit"><span id="cdDays">00</span><small>يوم</small></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span id="cdHours">00</span><small>ساعة</small></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span id="cdMinutes">00</span><small>دقيقة</small></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span id="cdSeconds">00</span><small>ثانية</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop top nav -->
+  <nav class="top-nav">
+    <button class="nav-btn active" data-tab="home">🏠 الرئيسية</button>
+    <button class="nav-btn" data-tab="tasks">✅ المهام</button>
+    <button class="nav-btn" data-tab="budget">💰 الميزانية</button>
+    <button class="nav-btn" data-tab="day">💍 يوم العرس</button>
+    <button class="nav-btn" data-tab="people">👥 المسؤولون</button>
+    <button class="nav-btn" data-tab="kit">👜 شنطة الطوارئ</button>
+    <button class="nav-btn" data-tab="backup">🗂️ نسخ احتياطي</button>
+  </nav>
+</header>
+
+<main class="app-main">
+
+  <!-- ===================== Home Tab ===================== -->
+  <section class="tab-content active" id="tab-home">
+
+    <div class="stats-grid">
+      <div class="stat-card"><span class="stat-icon">📋</span><span class="stat-value" id="statTotal">0</span><span class="stat-label">إجمالي المهام</span></div>
+      <div class="stat-card success"><span class="stat-icon">✅</span><span class="stat-value" id="statCompleted">0</span><span class="stat-label">المهام المنجزة</span></div>
+      <div class="stat-card warning"><span class="stat-icon">⏳</span><span class="stat-value" id="statRemaining">0</span><span class="stat-label">المهام المتبقية</span></div>
+      <div class="stat-card gold"><span class="stat-icon">💰</span><span class="stat-value" id="statBudget">0</span><span class="stat-label">إجمالي الميزانية</span></div>
+      <div class="stat-card success"><span class="stat-icon">💳</span><span class="stat-value" id="statPaid">0</span><span class="stat-label">المبلغ المدفوع</span></div>
+      <div class="stat-card danger"><span class="stat-icon">🧾</span><span class="stat-value" id="statLeft">0</span><span class="stat-label">المبلغ المتبقي</span></div>
+    </div>
+
+    <div class="progress-section card">
+      <div class="progress-circle-wrap">
+        <svg viewBox="0 0 120 120" class="progress-circle">
+          <circle cx="60" cy="60" r="52" class="progress-bg"></circle>
+          <circle cx="60" cy="60" r="52" class="progress-fg" id="progressCircleFg"></circle>
+        </svg>
+        <div class="progress-circle-text"><span id="progressPct">0%</span><small>نسبة الإنجاز</small></div>
+      </div>
+      <div class="progress-linear-wrap">
+        <div class="progress-linear-label">
+          <span>نسبة إنجاز تجهيزات العرس</span>
+          <span id="progressLinearPct">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill" id="progressLinearFill"></div></div>
+      </div>
+    </div>
+
+    <div class="section-block" id="urgentSection">
+      <div class="section-header">
+        <h2>🔥 يحتاج انتباه</h2>
+      </div>
+      <div class="urgent-list" id="urgentList"></div>
+    </div>
+
+    <div class="quick-actions">
+      <button class="btn btn-outline" id="btnPrintHome">🖨️ طباعة</button>
+      <button class="btn btn-outline" id="btnShareHome">📤 مشاركة قائمة المهام</button>
+      <button class="btn btn-gold" id="btnCopyHome">📋 نسخ المهام المتبقية</button>
+    </div>
+  </section>
+
+  <!-- ===================== Tasks Tab ===================== -->
+  <section class="tab-content" id="tab-tasks">
+    <div class="tasks-toolbar card">
+      <div class="search-row">
+        <input type="text" id="searchInput" placeholder="🔍 ابحثي عن مهمة، مسؤول، متجر...">
+        <button class="btn btn-gold btn-add" id="btnAddTask">+ إضافة مهمة</button>
+      </div>
+      <div class="filter-chips" id="filterChips">
+        <button class="chip active" data-filter="all">الكل</button>
+        <button class="chip" data-filter="remaining">المتبقي</button>
+        <button class="chip" data-filter="completed">المكتمل</button>
+        <button class="chip" data-filter="urgent">العاجل</button>
+        <button class="chip" data-filter="unpaid">غير المدفوع</button>
+        <select class="chip chip-select" id="filterAssignee">
+          <option value="">المسؤول: الكل</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="sectionsList"></div>
+  </section>
+
+  <!-- ===================== Budget Tab ===================== -->
+  <section class="tab-content" id="tab-budget">
+    <div class="card budget-summary">
+      <div class="setup-field">
+        <label for="totalBudgetInput">الميزانية الإجمالية للعرس (ر.س)</label>
+        <input type="number" min="0" id="totalBudgetInput" placeholder="0">
+      </div>
+      <div class="budget-stats">
+        <div class="b-stat"><span>إجمالي المصروفات</span><strong id="bTotalExpenses">0</strong></div>
+        <div class="b-stat success"><span>إجمالي المدفوع</span><strong id="bTotalPaid">0</strong></div>
+        <div class="b-stat danger"><span>المبالغ المتبقية</span><strong id="bTotalRemaining">0</strong></div>
+      </div>
+      <div class="progress-linear-wrap">
+        <div class="progress-linear-label">
+          <span>نسبة استهلاك الميزانية</span>
+          <span id="budgetUsagePct">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill" id="budgetUsageFill"></div></div>
+      </div>
+    </div>
+
+    <div class="card table-card">
+      <div class="table-scroll">
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>البند</th><th>المتجر/المورد</th><th>السعر</th><th>المدفوع</th><th>المتبقي</th><th>حالة الدفع</th>
+            </tr>
+          </thead>
+          <tbody id="budgetTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Wedding Day Tab ===================== -->
+  <section class="tab-content" id="tab-day">
+    <div class="card">
+      <div class="section-header">
+        <h2>💍 الجدول الزمني ليوم العرس</h2>
+        <button class="btn btn-gold" id="btnAddTimeline">+ إضافة موعد</button>
+      </div>
+      <div class="timeline" id="timelineList"></div>
+    </div>
+  </section>
+
+  <!-- ===================== People Tab ===================== -->
+  <section class="tab-content" id="tab-people">
+    <div class="card">
+      <div class="section-header">
+        <h2>👥 المسؤولون</h2>
+      </div>
+      <div class="add-inline-row">
+        <input type="text" id="newPersonInput" placeholder="اسم مسؤول جديد">
+        <button class="btn btn-gold" id="btnAddPerson">إضافة</button>
+      </div>
+      <div class="people-grid" id="peopleGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===================== Emergency Kit Tab ===================== -->
+  <section class="tab-content" id="tab-kit">
+    <div class="card">
+      <div class="section-header">
+        <h2>👜 شنطة الطوارئ</h2>
+      </div>
+      <div class="add-inline-row">
+        <input type="text" id="newKitInput" placeholder="عنصر جديد">
+        <button class="btn btn-gold" id="btnAddKit">إضافة</button>
+      </div>
+      <div class="kit-list" id="kitList"></div>
+    </div>
+  </section>
+
+  <!-- ===================== Backup Tab ===================== -->
+  <section class="tab-content" id="tab-backup">
+    <div class="card">
+      <div class="section-header"><h2>🗂️ النسخ الاحتياطي للبيانات</h2></div>
+      <p class="hint-text">بياناتك محفوظة تلقائيًا في هذا المتصفح. يُفضّل تصدير نسخة احتياطية بين فترة وأخرى حتى لا تفقدي بياناتك عند مسح ذاكرة المتصفح أو تغيير الجهاز.</p>
+      <div class="backup-actions">
+        <button class="btn btn-gold" id="btnExport">⬇️ تصدير نسخة احتياطية JSON</button>
+        <label class="btn btn-outline file-btn">
+          ⬆️ استيراد نسخة احتياطية JSON
+          <input type="file" id="importFile" accept="application/json" hidden>
+        </label>
+        <button class="btn btn-outline" id="btnPrintBackup">🖨️ طباعة قائمة المهام</button>
+        <button class="btn btn-outline" id="btnShareBackup">📤 مشاركة قائمة المهام</button>
+        <button class="btn btn-gold" id="btnCopyBackup">📋 نسخ المهام المتبقية (واتساب)</button>
+        <button class="btn btn-danger-outline" id="btnResetAll">🗑️ إعادة تعيين كل البيانات</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== More Tab (mobile) ===================== -->
+  <section class="tab-content" id="tab-more">
+    <div class="more-grid">
+      <button class="more-item" data-tab="people">👥<span>المسؤولون</span></button>
+      <button class="more-item" data-tab="kit">👜<span>شنطة الطوارئ</span></button>
+      <button class="more-item" data-tab="backup">🗂️<span>نسخ احتياطي</span></button>
+    </div>
+  </section>
+
+</main>
+
+<!-- Bottom nav (mobile) -->
+<nav class="bottom-nav">
+  <button class="bnav-btn active" data-tab="home"><span>🏠</span>الرئيسية</button>
+  <button class="bnav-btn" data-tab="tasks"><span>✅</span>المهام</button>
+  <button class="bnav-btn" data-tab="budget"><span>💰</span>الميزانية</button>
+  <button class="bnav-btn" data-tab="day"><span>💍</span>يوم العرس</button>
+  <button class="bnav-btn" data-tab="more"><span>☰</span>المزيد</button>
+</nav>
+
+<!-- ===================== Task Modal ===================== -->
+<div class="modal-overlay" id="taskModalOverlay">
+  <div class="modal" id="taskModal">
+    <div class="modal-header">
+      <h3 id="modalTitle">إضافة مهمة</h3>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="taskId">
+
+      <div class="form-group">
+        <label>اسم المهمة</label>
+        <input type="text" id="fTitle" placeholder="مثال: حجز القاعة">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>القسم</label>
+          <select id="fSection"></select>
+        </div>
+        <div class="form-group">
+          <label>حالة المهمة</label>
+          <select id="fStatus">
+            <option value="not_started">لم تبدأ</option>
+            <option value="in_progress">قيد التنفيذ</option>
+            <option value="booked">تم الحجز</option>
+            <option value="partial_paid">تم الدفع جزئيًا</option>
+            <option value="completed">مكتملة</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>المسؤول/ة عنها</label>
+          <input type="text" id="fAssignee" list="peopleDatalist" placeholder="اسم المسؤول">
+          <datalist id="peopleDatalist"></datalist>
+        </div>
+        <div class="form-group">
+          <label>رقم التواصل</label>
+          <input type="tel" id="fPhone" placeholder="05xxxxxxxx">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>اسم المتجر / مقدم الخدمة</label>
+          <input type="text" id="fVendor" placeholder="مثال: قاعة الماسة">
+        </div>
+        <div class="form-group">
+          <label>التاريخ / الموعد</label>
+          <input type="date" id="fDate">
+        </div>
+      </div>
+
+      <div class="form-row form-row-3">
+        <div class="form-group">
+          <label>الميزانية المتوقعة</label>
+          <input type="number" min="0" id="fBudgetExpected" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>المبلغ الفعلي</label>
+          <input type="number" min="0" id="fActualAmount" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>المبلغ المدفوع</label>
+          <input type="number" min="0" id="fPaidAmount" placeholder="0">
+        </div>
+      </div>
+
+      <div class="remaining-box">
+        <span>المبلغ المتبقي</span>
+        <strong id="fRemainingDisplay">0</strong>
+      </div>
+
+      <div class="form-group">
+        <label>ملاحظات</label>
+        <textarea id="fNotes" rows="3" placeholder="أي تفاصيل إضافية..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger-outline" id="btnDeleteTask">🗑️ حذف</button>
+      <button class="btn btn-gold" id="btnSaveTask">حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Firebase (اختياري): يُستخدم فقط إذا عبّأتِ assets/js/firebase-config.js
+     ببيانات مشروعك — لحفظ ومزامنة البيانات بين كل من يفتح موقعك. إذا كان
+     الملف فارغًا، أو تعذر تحميل هذه السكربتات (كما هو الحال داخل معاينة
+     Claude)، يعمل الموقع بشكل طبيعي بالحفظ المحلي فقط. -->
+<script src="assets/js/firebase-config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/state.js"></script>
+<script src="assets/js/render.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
